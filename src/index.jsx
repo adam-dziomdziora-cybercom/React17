@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 
 import '../style/main.scss';
+import ListAsComponent from './lists';
 
 const HelloWorld = () => {
   return (
@@ -14,6 +14,11 @@ const HelloWorld = () => {
       <div id="dupa2" />
       <div id="dupa3" />
       <div id="react-component" />
+      <ListAsComponent id="listascomonent1" />
+      <ListAsComponent
+        id="listascomonent2"
+        valueIWantToSee="show me your hidden power!"
+      />
     </React.Fragment>
   );
 };
@@ -63,27 +68,6 @@ ReactDOM.render(
   </ul>,
   document.getElementById('dupa3')
 );
-
-const ListAsComponent = (props) => {
-  return (
-    <ul id={props.id}>
-      {listItem1}
-
-      {props.valueIWantToSee && props.valueIWantToSee.length > 0 && (
-        <p>OK there is your content: {props.valueIWantToSee}</p>
-      )}
-    </ul>
-  );
-};
-
-ListAsComponent.propTypes = {
-  id: PropTypes.string.isRequired,
-  valueIWantToSee: PropTypes.string,
-};
-
-ListAsComponent.defaultProps = {
-  valueIWantToSee: '',
-};
 
 ReactDOM.render(
   <ListAsComponent id="mojeIdzpalca" valueIWantToSee="ta daaaaam" />,
