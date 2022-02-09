@@ -16,7 +16,8 @@ import '../style/main.scss';
 // import withLogger from './wrappedLogger';
 
 import Home from './home';
-import HelloWorld from './welcome';
+import LoadableWelcome from './loadableWelcome';
+// import HelloWorld from './welcome';
 
 export default function AppRouter() {
   function WillMatch() {
@@ -63,7 +64,7 @@ export default function AppRouter() {
             <Home />
           </Route>
           <Route path="/hello">
-            <HelloWorld />
+            <LoadableWelcome />
           </Route>
           <Route path="/old-match">
             <Redirect to="/will-match" />
