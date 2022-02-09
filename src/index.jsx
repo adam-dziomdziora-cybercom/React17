@@ -9,6 +9,9 @@ import {
   Redirect,
   useLocation,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import countReducer from '../redux/count.reducer';
 
 import '../style/main.scss';
 // import ListAsComponent from './lists';
@@ -18,6 +21,8 @@ import '../style/main.scss';
 import Home from './home';
 import LoadableWelcome from './loadableWelcome';
 // import HelloWorld from './welcome';
+
+const store = createStore(countReducer);
 
 export default function AppRouter() {
   function WillMatch() {
@@ -36,48 +41,50 @@ export default function AppRouter() {
   }
 
   return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/hello">Hello World!</Link>
-          </li>
-          <li>
-            <Link to="/old-match">Old Match, to be redirected</Link>
-          </li>
-          <li>
-            <Link to="/will-match">Will Match</Link>
-          </li>
-          <li>
-            <Link to="/will-not-match">Will Not Match</Link>
-          </li>
-          <li>
-            <Link to="/also/will/not/match">Also Will Not Match</Link>
-          </li>
-        </ul>
+    <Provider store={store}>
+      <Router>
+        <div>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/hello">Hello World!</Link>
+            </li>
+            <li>
+              <Link to="/old-match">Old Match, to be redirected</Link>
+            </li>
+            <li>
+              <Link to="/will-match">Will Match</Link>
+            </li>
+            <li>
+              <Link to="/will-not-match">Will Not Match</Link>
+            </li>
+            <li>
+              <Link to="/also/will/not/match">Also Will Not Match</Link>
+            </li>
+          </ul>
 
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/hello">
-            <LoadableWelcome />
-          </Route>
-          <Route path="/old-match">
-            <Redirect to="/will-match" />
-          </Route>
-          <Route path="/will-match">
-            <WillMatch />
-          </Route>
-          <Route path="*">
-            <NoMatch />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/hello">
+              <LoadableWelcome />
+            </Route>
+            <Route path="/old-match">
+              <Redirect to="/will-match" />
+            </Route>
+            <Route path="/will-match">
+              <WillMatch />
+            </Route>
+            <Route path="*">
+              <NoMatch />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 ReactDOM.render(<AppRouter />, document.getElementById('root'));

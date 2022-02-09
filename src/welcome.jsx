@@ -1,13 +1,46 @@
 import React from 'react';
 import ListAsComponent from './lists';
 import ListPure from './purelist';
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
+import { TYPES } from '../redux/count.reducer';
+
+const mapStateToProps = (state) => {
+  return {
+    count: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleIncrementClick: () => {
+      console.log('jestem w handle increment od dispatcha :O :O :O !');
+      dispatch({ type: TYPES.INCREMENT });
+    },
+    handleDecrementClick: () => dispatch({ type: TYPES.DECREMENT }),
+  };
+};
 
 class HelloWorld extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { date: '', items: [9, 8, 7] };
     this.updateListWithLogger = this.updateListWithLogger.bind(this);
+    console.log('construktor hello');
   }
+
+  componentDidUpdate = () => {
+    console.log('zrobiłę udpatę');
+  };
+
+  handleIncrementClick = () => {
+    console.log('jestem w handle increment od hello');
+    this.props.handleIncrementClick();
+  };
+
+  handleDecrementClick = () => {
+    this.props.handleDecrementClick();
+  };
 
   updateListWithLogger() {
     const date = new Date().toLocaleTimeString();
@@ -24,6 +57,7 @@ class HelloWorld extends React.PureComponent {
 
   render() {
     const { date } = this.state;
+    const { count } = this.props;
 
     return (
       <React.Fragment>
@@ -47,9 +81,27 @@ class HelloWorld extends React.PureComponent {
         <button className="btn btn-primary" onClick={this.updateListWithLogger}>
           lets update!
         </button>
+        <br />
+        <br />
+        <br />
+
+        <h2>Redux power: {count}</h2>
+
+        <button className="btn btn-primary" onClick={this.handleIncrementClick}>
+          REDUX +++
+        </button>
+        <button className="btn btn-light" onClick={this.handleDecrementClick}>
+          REDUX ---
+        </button>
       </React.Fragment>
     );
   }
 }
 
-export default HelloWorld;
+HelloWorld.propTypes = {
+  count: PropTypes.number.isRequired,
+  handleIncrementClick: PropTypes.func.isRequired,
+  handleDecrementClick: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HelloWorld);
