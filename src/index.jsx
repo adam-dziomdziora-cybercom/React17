@@ -10,6 +10,8 @@ const HelloWorld = () => {
       <h1 className="header">Hi!</h1>
       <div id="injectHere" />
       <div id="dupa" />
+      <div id="dupa2" />
+      <div id="dupa3" />
     </React.Fragment>
   );
 };
@@ -32,4 +34,27 @@ ReactDOM.render(
     React.createElement('li', { id: 'item1' }, 'item 1 hi \u26CF;')
   ),
   document.getElementById('dupa')
+);
+
+const id1 = 'myList234';
+const listItem1 = <li>does it work?</li>;
+
+ReactDOM.render(
+  <ul id={id1}> {listItem1} </ul>,
+  document.getElementById('dupa2')
+);
+
+const id2 = 'myId2';
+const listItems = [123, 321, 55].map((singleValue) => (
+  <li
+    key={singleValue}
+    className="list-group-item"
+  >{`tutaj jest string polaczony ze zmienna ${singleValue}`}</li>
+));
+
+ReactDOM.render(
+  <ul id={id2} className="list-group">
+    {listItems}
+  </ul>,
+  document.getElementById('dupa3')
 );
