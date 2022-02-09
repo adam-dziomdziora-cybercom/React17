@@ -1,33 +1,70 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import '../style/main.scss';
 import ListAsComponent from './lists';
 import ListPure from './purelist';
+import withLogger from './wrappedLogger';
 
-const HelloWorld = () => {
-  return (
-    // <></>
-    <React.Fragment>
-      <h1 className="header">Hi!</h1>
-      <div id="injectHere" />
-      <div id="dupa" />
-      <div id="dupa2" />
-      <div id="dupa3" />
-      <div id="react-component" />
-      <ListAsComponent id="listascomonent1" />
-      <ListAsComponent
-        id="listascomonent2"
-        valueIWantToSee="show me your hidden power!"
-      />
-      <ListPure id="listascomonent1" />
-      <ListPure
-        id="listascomonent2"
-        valueIWantToSee="show me your hidden power!"
-      />
-    </React.Fragment>
-  );
-};
+class HelloWorld extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { date: '', items: [9, 8, 7] };
+    this.updateListWithLogger = this.updateListWithLogger.bind(this);
+  }
+
+  updateListWithLogger() {
+    const date = new Date().toLocaleTimeString();
+    this.setState({ date });
+  }
+
+  onChange = (lastValue) => {
+    const newValue = lastValue + 1;
+    const { items } = this.state;
+    const items2 = [...items, newValue];
+    const updatedDate = `Last updateted at ${new Date().toLocaleTimeString()}, inserted value ${newValue}`;
+    this.setState({ date: updatedDate, items: items2 });
+  };
+
+  render() {
+    const ListWithLogger = withLogger(ListPure);
+    const { date, items } = this.state;
+
+    return (
+      // <></>
+      <React.Fragment>
+        <h1 className="header">Hi!</h1>
+        <div id="injectHere" />
+        <div id="dupa" />
+        <div id="dupa2" />
+        <div id="dupa3" />
+        <div id="react-component" />
+        <ListAsComponent id="listascomonent1" />
+        <ListAsComponent
+          id="listascomonent2"
+          valueIWantToSee="show me your hidden power!"
+        />
+        <ListPure id="listascomonent1" />
+        <ListPure
+          id="listascomonent2"
+          valueIWantToSee="show me your hidden power!"
+        />
+        {/* <ListWithLogger
+          id="556"
+          valueToInject={date}
+          onChange={this.onChange}
+          items={items}
+        /> */}
+        <p>{date}</p>
+        <button className="btn btn-primary" onClick={this.updateListWithLogger}>
+          lets update!
+        </button>
+      </React.Fragment>
+    );
+  }
+}
+
 ReactDOM.render(<HelloWorld />, document.getElementById('root'));
 
 ReactDOM.render(
