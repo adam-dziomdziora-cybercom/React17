@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import '../style/main.scss';
 
@@ -12,6 +13,7 @@ const HelloWorld = () => {
       <div id="dupa" />
       <div id="dupa2" />
       <div id="dupa3" />
+      <div id="react-component" />
     </React.Fragment>
   );
 };
@@ -45,16 +47,45 @@ ReactDOM.render(
 );
 
 const id2 = 'myId2';
-const listItems = [123, 321, 55].map((singleValue) => (
-  <li
-    key={singleValue}
-    className="list-group-item"
-  >{`tutaj jest string polaczony ze zmienna ${singleValue}`}</li>
-));
+// [123, 321, 55]
+const listItems = Array.from({ length: 3 }, (_, idx) => `${++idx}`).map(
+  (singleValue) => (
+    <li
+      key={singleValue}
+      className="list-group-item"
+    >{`tutaj jest string polaczony ze zmienna ${singleValue}`}</li>
+  )
+);
 
 ReactDOM.render(
   <ul id={id2} className="list-group">
     {listItems}
   </ul>,
   document.getElementById('dupa3')
+);
+
+const ListAsComponent = (props) => {
+  return (
+    <ul id={props.id}>
+      {listItem1}
+
+      {props.valueIWantToSee && props.valueIWantToSee.length > 0 && (
+        <p>OK there is your content: {props.valueIWantToSee}</p>
+      )}
+    </ul>
+  );
+};
+
+ListAsComponent.propTypes = {
+  id: PropTypes.string.isRequired,
+  valueIWantToSee: PropTypes.string,
+};
+
+ListAsComponent.defaultProps = {
+  valueIWantToSee: '',
+};
+
+ReactDOM.render(
+  <ListAsComponent id="mojeIdzpalca" valueIWantToSee="ta daaaaam" />,
+  document.getElementById('react-component')
 );
