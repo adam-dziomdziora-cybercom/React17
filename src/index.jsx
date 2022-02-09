@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import '../style/main.scss';
 import ListAsComponent from './lists';
+import ListPure from './purelist';
 
 const HelloWorld = () => {
   return (
@@ -16,6 +17,11 @@ const HelloWorld = () => {
       <div id="react-component" />
       <ListAsComponent id="listascomonent1" />
       <ListAsComponent
+        id="listascomonent2"
+        valueIWantToSee="show me your hidden power!"
+      />
+      <ListPure id="listascomonent1" />
+      <ListPure
         id="listascomonent2"
         valueIWantToSee="show me your hidden power!"
       />
