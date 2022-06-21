@@ -1,0 +1,17 @@
+name: Docker Main CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Build Docker images
+        run: |
+          docker build . -t digivisio2030.azurecr.io/react17:latest

@@ -4,10 +4,12 @@
   "description": "Single Page Application example with the ReactJS",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development",
-    "prod": "webpack --mode production",
-    "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint --fix \"src/**/*.js\"",
+    "start": "webpack-dev-server --mode development",
+    "build": "npm run lint && npm run format && npm run prod",
+    "dev": "webpack --mode development --progress --color --watch",
+    "prod": "webpack --mode production -d source-map",
+    "format": "npx prettier --write \"src/**/*.{js,jsx,ts,tsx,html,css,scss}\"",
+    "lint": "npx eslint --fix \"src/**/*.{js,jsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
